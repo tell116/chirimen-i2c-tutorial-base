@@ -1,0 +1,14 @@
+{
+  "name": "chirimen-i2c-tutorial-base",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node ./app.mjs"
+  },
+  "author": "KDDI Technology",
+  "license": "MIT",
+  "dependencies": {
+    "chirimen": "^0.1.0"
+  }
+}
