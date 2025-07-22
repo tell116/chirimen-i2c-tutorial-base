@@ -13,7 +13,7 @@ await vl53l0x.init();
 let count = 0;
 const interval = setInterval(async function() {
     // 
-    let data = await vl53l0x.read();
+    let data = await vl53l0x.getRange();
     // 
     console.dir(data);
     
