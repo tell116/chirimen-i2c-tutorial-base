@@ -1,5 +1,5 @@
 import {requestI2CAccess} from "chirimen";
-import MCP9808 from "./mcp9808.js";
+import MCP9808 from "@chirimen/mcp9808";
 // 高精度温度センサー
 
 const i2cAccess = await requestI2CAccess();
