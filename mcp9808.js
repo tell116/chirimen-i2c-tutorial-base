@@ -55,24 +55,32 @@ class MCP9808{
     return temp;
   }
   async shutdown(){
-    let conf_register = this.i2cSlave.read16(MCP9808_REG_CONFIG);
+    let conf_register = await this.i2cSlave.read16(MCP9808_REG_CONFIG);
     let conf_shutdown = conf_register | MCP9808_REG_CONFIG_SHUTDOWN;
-    this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
+    await this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
   }
-  async wake(){
-    let conf_register = this.i2cSlave.read16(MCP9808_REG_CONFIG);
-    let conf_shutdown = conf_register & ~MCP9808_REG_CONFIG_SHUTDOWN;
-    this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
-    
-    setTimeout(function() {
-      console.log("260ms delay");
-    }, 260); 
+  wake(){
+    return new Promise(async (resolve)=>{
+      let conf_register = await this.i2cSlave.read16(MCP9808_REG_CONFIG);
+      let conf_shutdown = conf_register & ~MCP9808_REG_CONFIG_SHUTDOWN;
+      await this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
+
+      setTimeout(function() {
+        console.log("260ms delay");
+        return resolve();
+      }, 260); 
+    })
   }
   async getResolution(){
-    return this.i2cSlave.read8(MCP9808_REG_RESOLUTION);
+    return await this.i2cSlave.read8(MCP9808_REG_RESOLUTION);
   }
   async setResolution(value){
-    this.i2cSlave.write8(MCP9808_REG_RESOLUTION, value & 0x03);
+    // Mode Resolution SampleTime
+    //  0    0.5°C       30 ms
+    //  1    0.25°C      65 ms
+    //  2    0.125°C     130 ms
+    //  3    0.0625°C    250 ms
+    await this.i2cSlave.write8(MCP9808_REG_RESOLUTION, value & 0x03);
   }
 }
 export default MCP9808;
