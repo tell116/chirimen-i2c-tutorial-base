@@ -23,21 +23,24 @@ const interval = setInterval(async function() {
   console.dir({"T":data_0t,"F":data_0f});
   
   await mcp9808.setResolution(1);
+  mode = await mcp9808.getResolution();
   let data_1t = await mcp9808.readTempC();
   let data_1f = await mcp9808.readTempF();
-  console.dir("mode=1");
+  console.dir(mode);
   console.dir({"T":data_1t,"F":data_1f});
 
   await mcp9808.setResolution(2);
+  mode = await mcp9808.getResolution();
   let data_2t = await mcp9808.readTempC();
   let data_2f = await mcp9808.readTempF();
-  console.dir("mode=2");
+  console.dir(mode);
   console.dir({"T":data_2t,"F":data_2f});
 
   await mcp9808.setResolution(3);
+  mode = await mcp9808.getResolution();
   let data_3t = await mcp9808.readTempC();
   let data_3f = await mcp9808.readTempF();
-  console.dir("mode=3");
+  console.dir(mode);
   console.dir({"T":data_3t,"F":data_3f});
 
 }, 500);
