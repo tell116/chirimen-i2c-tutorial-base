@@ -11,10 +11,12 @@ const mcp9808 = new MCP9808(i2cPort, 0x18);
 // 初期化処理
 await mcp9808.init();
 
-mcp9808.wake();
+
 
 const interval = setInterval(async function() {
   
+  mcp9808.wake();
+
   mcp9808.setResolution(0);
   let mode = mcp9808.getResolution();
   let data_0t = mcp9808.readTempC();
