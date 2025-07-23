@@ -16,9 +16,10 @@ mcp9808.wake();
 const interval = setInterval(async function() {
   
   mcp9808.setResolution(0);
+  let mode = mcp9808.getResolution();
   let data_0t = mcp9808.readTempC();
   let data_0f = mcp9808.readTempF();
-  console.dir("mode=0");
+  console.dir(mode);
   console.dir({"T":data_0t,"F":data_0f});
   
   mcp9808.setResolution(1);
