@@ -57,4 +57,4 @@ const interval = setInterval(async function() {
 
 }, 500);
 
-await mcp9808.shutdown();
+//await mcp9808.shutdown();
