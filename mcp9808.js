@@ -31,7 +31,12 @@ class MCP9808{
   }
   async readTempC(){
     let temp = null;
-    const t = await this.i2cSlave.read16(MCP9808_REG_AMBIENT_TEMP);
+    let t = await this.i2cSlave.read16(MCP9808_REG_AMBIENT_TEMP);
+
+    const low = t & 0xFF;
+    const high = (t >> 8) & 0xFF;
+    t = (low << 8) | high;
+
     if (t != 0xFFFF) {
        temp = t & 0x0FFF;
        temp /= 16.0;
