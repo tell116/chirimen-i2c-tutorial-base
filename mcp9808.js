@@ -55,12 +55,12 @@ class MCP9808{
     return temp;
   }
   async shutdown(){
-    let conf_register = read16(MCP9808_REG_CONFIG);
+    let conf_register = this.i2cSlave.read16(MCP9808_REG_CONFIG);
     let conf_shutdown = conf_register | MCP9808_REG_CONFIG_SHUTDOWN;
     this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
   }
   async wake(){
-    let conf_register = read16(MCP9808_REG_CONFIG);
+    let conf_register = this.i2cSlave.read16(MCP9808_REG_CONFIG);
     let conf_shutdown = conf_register & ~MCP9808_REG_CONFIG_SHUTDOWN;
     this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
     
