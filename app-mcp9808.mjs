@@ -11,11 +11,9 @@ const mcp9808 = new MCP9808(i2cPort, 0x18);
 // 初期化処理
 await mcp9808.init();
 
-
+await mcp9808.wake();
 
 const interval = setInterval(async function() { 
-
-  await mcp9808.wake();
 
   for(let i=0;i<4;i++){
     await mcp9808.setResolution(i);
@@ -55,7 +53,8 @@ const interval = setInterval(async function() {
   console.dir(mode);
   console.dir({"T":data_3t,"F":data_3f});
   */
-  await mcp9808.shutdown();
+
 
 }, 500);
 
+await mcp9808.shutdown();
