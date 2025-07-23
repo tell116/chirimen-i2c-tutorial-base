@@ -15,6 +15,16 @@ await mcp9808.wake();
 
 const interval = setInterval(async function() { 
 
+  for(let i=0;i<4;i++){
+    await mcp9808.setResolution(i);
+    let mode = await mcp9808.getResolution();
+    let data_t = await mcp9808.readTempC();
+    let data_f = await mcp9808.readTempF();
+    console.dir(mode);
+    console.dir({"T":data_t,"F":data_f});
+  }
+
+  /*
   await mcp9808.setResolution(0);
   let mode = await mcp9808.getResolution();
   let data_0t = await mcp9808.readTempC();
@@ -42,7 +52,7 @@ const interval = setInterval(async function() {
   let data_3f = await mcp9808.readTempF();
   console.dir(mode);
   console.dir({"T":data_3t,"F":data_3f});
-
+  */
 }, 500);
 
 await mcp9808.shutdown();
