@@ -12,12 +12,10 @@ class MCP9808{
   }
   async init() {
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    //await this.i2cSlave.write16(MCP9808_REG_CONFIG,0x0);
     await this.write16(MCP9808_REG_CONFIG,0x0);
   }
   async readTempC(){
     let temp = null;
-    //let t = await this.i2cSlave.read16(MCP9808_REG_AMBIENT_TEMP);
     let t = await this.read16(MCP9808_REG_AMBIENT_TEMP);
 
     if (t != 0xFFFF) {
@@ -31,7 +29,6 @@ class MCP9808{
   }
   async readTempF(){
     let temp = null;
-    //let t = await this.i2cSlave.read16(MCP9808_REG_AMBIENT_TEMP);
     let t = await this.read16(MCP9808_REG_AMBIENT_TEMP);
 
     if (t != 0xFFFF) {
@@ -45,18 +42,14 @@ class MCP9808{
     return temp;
   }
   async shutdown(){
-    //let conf_register = await this.i2cSlave.read16(MCP9808_REG_CONFIG);
     let conf_register = await this.read16(MCP9808_REG_CONFIG);
     let conf_shutdown = conf_register | MCP9808_REG_CONFIG_SHUTDOWN;
-    //await this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
     await this.write16(MCP9808_REG_CONFIG, conf_shutdown);
   }
   wake(){
     return new Promise(async (resolve)=>{
-      //let conf_register = await this.i2cSlave.read16(MCP9808_REG_CONFIG);
       let conf_register = await this.read16(MCP9808_REG_CONFIG);
       let conf_shutdown = conf_register & ~MCP9808_REG_CONFIG_SHUTDOWN;
-      //await this.i2cSlave.write16(MCP9808_REG_CONFIG, conf_shutdown);
       await this.write16(MCP9808_REG_CONFIG, conf_shutdown);
 
       setTimeout(function() {
