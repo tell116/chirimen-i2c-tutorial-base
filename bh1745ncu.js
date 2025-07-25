@@ -25,7 +25,8 @@ class BH1745NUC{
   }
 
   async get_val(data){
-    let val;
+    const buffer = new ArrayBuffer(8);
+    const val = new Uint8Array(buffer);
 
     let rc = await this.get_rawval(val);
     //if (rc != 0) {///エラー時
