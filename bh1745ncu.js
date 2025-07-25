@@ -24,7 +24,7 @@ const BH1745NUC_MODE_CONTROL2_ADC_GAIN_X2 = 1;
 const BH1745NUC_MODE_CONTROL2_ADC_GAIN_X16 = 2;
 const BH1745NUC_MODE_CONTROL2_RGBC_EN = (1 << 4);       
 
-const  BH1745NUC_MODE_CONTROL1_VAL = BH1745NUC_MODE_CONTROL1_MEAS_TIME160MS;
+const BH1745NUC_MODE_CONTROL1_VAL = BH1745NUC_MODE_CONTROL1_MEAS_TIME160MS;
 const BH1745NUC_MODE_CONTROL2_VAL = BH1745NUC_MODE_CONTROL2_RGBC_EN | BH1745NUC_MODE_CONTROL2_ADC_GAIN_X16;
 const BH1745NUC_MODE_CONTROL3_VAL = 0x02; 
 
@@ -39,51 +39,21 @@ class BH1745NUC{
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
     ///
     let rc;
-    let reg;
-
-    rc = this.read(BH1745NUC_SYSTEM_CONTROL, reg, 8);
-    if (rc != 0) {
-      console.log("Can't access BH1745NUC");
-      return (rc);
-    }
-    reg = reg & 0x3F;
-    console.log("BH1745NUC Part ID Value = ");
-    //Serial.println(reg, HEX);
-
-    if (reg != BH1745NUC_PART_ID_VAL) {
-      console.log("Can't find BH1745NUC");
-      return (rc);
-    }
-
-    rc = this.read(BH1745NUC_MANUFACTURER_ID, reg, 8);
-    if (rc != 0) {
-      console.log("Can't access BH1745NUC");
-      return (rc);
-    }
-    console.log("BH1745NUC MANUFACTURER ID Register Value = ");
-    //Serial.println(reg, HEX);
-
-    if (reg != BH1745NUC_MANUFACT_ID_VAL) {
-      console.log("Can't find BH1745NUC");
-      return (rc);
-    }
 
     reg = BH1745NUC_MODE_CONTROL1_VAL;
-    rc = this.write(BH1745NUC_MODE_CONTROL1, reg, 8);
+    rc = this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL1 register");
       return (rc);
     }
 
-    reg = BH1745NUC_MODE_CONTROL2_VAL;
-    rc = this.write(BH1745NUC_MODE_CONTROL2, reg, 8);
+    rc = this.write(BH1745NUC_MODE_CONTROL2, [BH1745NUC_MODE_CONTROL2_VAL]);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL2 register");
       return (rc);
     }
 
-    reg = BH1745NUC_MODE_CONTROL3_VAL;
-    rc = this.write(BH1745NUC_MODE_CONTROL3, reg, 8);
+    rc = this.write(BH1745NUC_MODE_CONTROL3, BH1745NUC_MODE_CONTROL3_VAL);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL3 register");
       return (rc);
@@ -116,19 +86,9 @@ class BH1745NUC{
     return (rc);
   }
 
-  async write(memory_address, data, size){
-    let rc;
-    const write_data = [memory_address,...data];
-
-    if(size == 8){
-      for (let i = 0; i < data.length; i++) {
-        const rc = await this.i2cSlave.write8(memory_address + i, data[i]);
-      }
-    }else if(size == 16){
-      for (let i = 0; i < data.length; i++) {
-        const rc = await this.i2cSlave.write16(registerStart + i * 2, data[i]);
-      }
-    }
+  async write(memory_address, data){
+    await this.i2cSlave.writeByte(memory_address);
+    await this.i2cSlave.writeBytes(data);
   }
 
   async read(memory_address, data, size){
