@@ -53,7 +53,7 @@ class BH1745NUC{
       return (rc);
     }
 
-    rc = this.write(BH1745NUC_MODE_CONTROL3, BH1745NUC_MODE_CONTROL3_VAL);
+    rc = this.write(BH1745NUC_MODE_CONTROL3, [BH1745NUC_MODE_CONTROL3_VAL]);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL3 register");
       return (rc);
@@ -91,29 +91,9 @@ class BH1745NUC{
     await this.i2cSlave.writeBytes(data);
   }
 
-  async read(memory_address, data, size){
-    let rc;
-
-    if(size == 8){
-      rc = await this.i2cSlave.write8(this.slaveAddress,memory_address);
-    }else if(size == 16){
-      rc = await this.i2cSlave.write16(this.slaveAddress,memory_address);
-    }
-    //if (rc != 0) {///エラー時
-      //return (rc);
-    //}
-    
-    let read;
-    if(size == 8){
-      read = await this.i2cSlave.read8(this.slaveAddress);
-    }else if(size == 16){
-      read = await this.i2cSlave.read16(this.slaveAddress);
-    }
-    for(let i = 0; i < size; i++){
-      data[i] = read[i];
-    }
-    console.dir({"dr0":data[0], "dr1":data[1], "dr2":data[2], "dr3":data[3],"dr4":data[4], "dr5":data[5], "dr6":data[6], "dr7":data[7]});///
-    return (0);
+  async read(memory_address, size){
+    await this.i2cSlave.writeByte(memory_address);
+    return await this.i2cSlave.readBytes(size);
   }
 }
 export default BH1745NUC;
