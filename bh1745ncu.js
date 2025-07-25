@@ -20,23 +20,23 @@ class BH1745NUC{
     if (rc != 0) {
       console.log("Can't get BH1745NUC RGBC value");
     }
-    console.dir({"dr0":data[0], "dr1":data[1], "dr2":data[2], "dr3":data[3],"dr0":data[4], "dr1":data[5], "dr2":data[6], "dr3":data[7]});///
+    console.dir({"r0":data[0], "r1":data[1], "r2":data[2], "r3":data[3],"r4":data[4], "r5":data[5], "r6":data[6], "r7":data[7]});///
     return (rc);
   }
 
   async get_val(data){
     const buffer = new ArrayBuffer(8);
-    let val = new Uint8Array(buffer);
+    const val = new Uint8Array(buffer);
 
     let rc = await this.get_rawval(val);
     //if (rc != 0) {///エラー時
       //return (rc);
     //}
 
-    data[0] =  ((val[1] << 8) & 0xffff) | val[0];
-    data[1] =  ((val[3] << 8) & 0xffff) | val[2];
-    data[2] =  ((val[5] << 8) & 0xffff) | val[4];
-    data[3] =  ((val[7] << 8) & 0xffff) | val[6];
+    data[0] =  (val[1] << 8) | val[0];
+    data[1] =  (val[3] << 8) | val[2];
+    data[2] =  (val[5] << 8) | val[4];
+    data[3] =  (val[7] << 8) | val[6];
     console.dir({"d0":data[0], "d1":data[1], "d2":data[2], "d3":data[3]});///
     return (rc);
   }
