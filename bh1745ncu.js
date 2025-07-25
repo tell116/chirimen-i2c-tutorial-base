@@ -65,16 +65,14 @@ class BH1745NUC{
       //return (rc);
     //}
     
+    let read;
     if(size == 8){
-      const read = await this.i2cSlave.read8(this.slaveAddress);
-      for(let i = 0; i < size; i++){
-        data[i] = read[i];
-      }
+      read = await this.i2cSlave.read8(this.slaveAddress);
     }else if(size == 16){
-      const read = await this.i2cSlave.read16(this.slaveAddress);
-      for(let i = 0; i < size; i++){
-        data[i] = read[i];
-      }
+      read = await this.i2cSlave.read16(this.slaveAddress);
+    }
+    for(let i = 0; i < size; i++){
+      data[i] = read[i];
     }
     console.dir({"dr0":data[0], "dr1":data[1], "dr2":data[2], "dr3":data[3],"dr4":data[4], "dr5":data[5], "dr6":data[6], "dr7":data[7]});///
     return (0);
