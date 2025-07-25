@@ -40,7 +40,6 @@ class BH1745NUC{
     ///
     let rc;
 
-    reg = BH1745NUC_MODE_CONTROL1_VAL;
     rc = this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL1 register");
