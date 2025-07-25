@@ -65,9 +65,9 @@ class BH1745NUC{
     //}
     
     if(size == 8){
-      data[cnt] = await this.i2cSlave.read8(this.slaveAddress);
+      data = await this.i2cSlave.read8(this.slaveAddress);
     }else if(size == 16){
-      data[cnt] = await this.i2cSlave.read16(this.slaveAddress);
+      data = await this.i2cSlave.read16(this.slaveAddress);
     }
 
     return (0);
