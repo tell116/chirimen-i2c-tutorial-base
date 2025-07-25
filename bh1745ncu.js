@@ -3,6 +3,26 @@ const BH1745NUC_DEVICE_ADDRESS_39 = 0x39;// 7bit Addrss
 
 const BH1745NUC_RED_DATA_LSB = 0x50;
 
+const BH1745NUC_PART_ID_VAL = 0x0B;            
+const BH1745NUC_MANUFACT_ID_VAL = 0xE0;         
+
+const BH1745NUC_SYSTEM_CONTROL = 0x40;              
+const BH1745NUC_MODE_CONTROL1 = 0x41;                
+const BH1745NUC_MODE_CONTROL2 = 0x42;              
+const BH1745NUC_MODE_CONTROL3 = 0x44;            
+const BH1745NUC_MANUFACTURER_ID = 0x92;           
+
+const BH1745NUC_MODE_CONTROL1_MEAS_TIME160MS = 0x00; 
+
+const BH1745NUC_MODE_CONTROL2_ADC_GAIN_X1 = 0; 
+const BH1745NUC_MODE_CONTROL2_ADC_GAIN_X2 = 1;
+const BH1745NUC_MODE_CONTROL2_ADC_GAIN_X16 = 2;
+const BH1745NUC_MODE_CONTROL2_RGBC_EN = (1 << 4)       
+
+const  BH1745NUC_MODE_CONTROL1_VAL = BH1745NUC_MODE_CONTROL1_MEAS_TIME160MS;
+const BH1745NUC_MODE_CONTROL2_VAL = BH1745NUC_MODE_CONTROL2_RGBC_EN | BH1745NUC_MODE_CONTROL2_ADC_GAIN_X16;
+const BH1745NUC_MODE_CONTROL3_VAL = 0x02; 
+
 class BH1745NUC{
     constructor(i2cPort,slaveAddress){
     this.i2cPort = i2cPort;
@@ -13,6 +33,56 @@ class BH1745NUC{
   async init() {
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
     ///
+    let rc;
+    let reg;
+
+    rc = read(BH1745NUC_SYSTEM_CONTROL, reg, 1);
+    if (rc != 0) {
+      console.log("Can't access BH1745NUC");
+      return (rc);
+    }
+    reg = reg & 0x3F;
+    console.log("BH1745NUC Part ID Value = ");
+    //Serial.println(reg, HEX);
+
+    if (reg != BH1745NUC_PART_ID_VAL) {
+      console.log("Can't find BH1745NUC");
+      return (rc);
+    }
+
+    rc = read(BH1745NUC_MANUFACTURER_ID, reg, 1);
+    if (rc != 0) {
+      console.log("Can't access BH1745NUC");
+      return (rc);
+    }
+    console.log("BH1745NUC MANUFACTURER ID Register Value = ");
+    //Serial.println(reg, HEX);
+
+    if (reg != BH1745NUC_MANUFACT_ID_VAL) {
+      console.log("Can't find BH1745NUC");
+      return (rc);
+    }
+
+    reg = BH1745NUC_MODE_CONTROL1_VAL;
+    rc = write(BH1745NUC_MODE_CONTROL1, reg, 1);
+    if (rc != 0) {
+      console.log("Can't write BH1745NUC MODE_CONTROL1 register");
+      return (rc);
+    }
+
+    reg = BH1745NUC_MODE_CONTROL2_VAL;
+    rc = write(BH1745NUC_MODE_CONTROL2, reg, 1);
+    if (rc != 0) {
+      console.log("Can't write BH1745NUC MODE_CONTROL2 register");
+      return (rc);
+    }
+
+    reg = BH1745NUC_MODE_CONTROL3_VAL;
+    rc = write(BH1745NUC_MODE_CONTROL3, reg, 1);
+    if (rc != 0) {
+      console.log("Can't write BH1745NUC MODE_CONTROL3 register");
+      return (rc);
+    }
   }
 
   async get_rawval(data){
