@@ -43,14 +43,17 @@ class BH1745NUC{
 
   async write(memory_address, data, size){
     let rc;
-    const write_data = [memory_address,data,size];
+    const write_data = [memory_address,...data];
 
     if(size == 8){
-      rc = await this.i2cSlave.write8(this.slaveAddress,write_data);
+      for (let i = 0; i < data.length; i++) {
+        const rc = await this.i2cSlave.write8(memory_address + i, data[i]);
+      }
     }else if(size == 16){
-      rc = await this.i2cSlave.write16(this.slaveAddress,write_data);
+      for (let i = 0; i < data.length; i++) {
+        const rc = await this.i2cSlave.write16(registerStart + i * 2, data[i]);
+      }
     }
-    return (rc);
   }
 
   async read(memory_address, data, size){
