@@ -16,7 +16,7 @@ class BH1745NUC{
   }
 
   async get_rawval(data){
-    const rc = await read(BH1745NUC_RED_DATA_LSB, data, 8);
+    const rc = await this.read(BH1745NUC_RED_DATA_LSB, data, 8);
     if (rc != 0) {
       console.log("Can't get BH1745NUC RGBC value");
     }
@@ -27,7 +27,7 @@ class BH1745NUC{
   async get_val(data){
     let val;
 
-    let rc = get_rawval(val);
+    let rc = await this.get_rawval(val);
     //if (rc != 0) {///エラー時
       //return (rc);
     //}
