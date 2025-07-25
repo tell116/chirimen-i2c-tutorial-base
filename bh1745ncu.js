@@ -20,7 +20,7 @@ class BH1745NUC{
     if (rc != 0) {
       console.log("Can't get BH1745NUC RGBC value");
     }
-
+    console.dir({"dr0":data[0], "dr1":data[1], "dr2":data[2], "dr3":data[3]});///
     return (rc);
   }
 
@@ -37,7 +37,7 @@ class BH1745NUC{
     data[1] =  ((val[3] << 8) & 0xffff) | val[2];
     data[2] =  ((val[5] << 8) & 0xffff) | val[4];
     data[3] =  ((val[7] << 8) & 0xffff) | val[6];
-
+    console.dir({"d0":data[0], "d1":data[1], "d2":data[2], "d3":data[3]});///
     return (rc);
   }
 
