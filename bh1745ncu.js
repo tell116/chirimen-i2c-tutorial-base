@@ -70,7 +70,7 @@ class BH1745NUC{
     }else if(size == 16){
       data = await this.i2cSlave.read16(this.slaveAddress);
     }
-
+    console.dir({"dr0":data[0], "dr1":data[1], "dr2":data[2], "dr3":data[3],"dr0":data[4], "dr1":data[5], "dr2":data[6], "dr3":data[7]});///
     return (0);
   }
 }
