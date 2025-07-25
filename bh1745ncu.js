@@ -63,12 +63,11 @@ class BH1745NUC{
     //if (rc != 0) {///エラー時
       //return (rc);
     //}
-
-    this.Wire.requestFrom(this.slaveAddress, size, true);
-    let cnt = 0;
-    while(this.Wire.available()) {
-      data[cnt] = this.Wire.read();
-      cnt++;
+    
+    if(size == 8){
+      data[cnt] = await this.i2cSlave.read8(this.slaveAddress);
+    }else if(size == 16){
+      data[cnt] = await this.i2cSlave.read16(this.slaveAddress);
     }
 
     return (0);
