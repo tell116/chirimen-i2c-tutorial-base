@@ -27,7 +27,7 @@ class BH1745NUC{
   async get_val(data){
     let val;
 
-    let rc = await get_rawval(val);
+    let rc = get_rawval(val);
     //if (rc != 0) {///エラー時
       //return (rc);
     //}
