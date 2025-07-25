@@ -36,7 +36,7 @@ class BH1745NUC{
     let rc;
     let reg;
 
-    rc = read(BH1745NUC_SYSTEM_CONTROL, reg, 1);
+    rc = this.read(BH1745NUC_SYSTEM_CONTROL, reg, 1);
     if (rc != 0) {
       console.log("Can't access BH1745NUC");
       return (rc);
@@ -50,7 +50,7 @@ class BH1745NUC{
       return (rc);
     }
 
-    rc = read(BH1745NUC_MANUFACTURER_ID, reg, 1);
+    rc = this.read(BH1745NUC_MANUFACTURER_ID, reg, 1);
     if (rc != 0) {
       console.log("Can't access BH1745NUC");
       return (rc);
@@ -64,21 +64,21 @@ class BH1745NUC{
     }
 
     reg = BH1745NUC_MODE_CONTROL1_VAL;
-    rc = write(BH1745NUC_MODE_CONTROL1, reg, 1);
+    rc = this.write(BH1745NUC_MODE_CONTROL1, reg, 1);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL1 register");
       return (rc);
     }
 
     reg = BH1745NUC_MODE_CONTROL2_VAL;
-    rc = write(BH1745NUC_MODE_CONTROL2, reg, 1);
+    rc = this.write(BH1745NUC_MODE_CONTROL2, reg, 1);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL2 register");
       return (rc);
     }
 
     reg = BH1745NUC_MODE_CONTROL3_VAL;
-    rc = write(BH1745NUC_MODE_CONTROL3, reg, 1);
+    rc = this.write(BH1745NUC_MODE_CONTROL3, reg, 1);
     if (rc != 0) {
       console.log("Can't write BH1745NUC MODE_CONTROL3 register");
       return (rc);
