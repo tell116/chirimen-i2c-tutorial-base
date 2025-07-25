@@ -14,7 +14,8 @@ await bh1745ncu.init();
 
 let count = 0;
 const interval = setInterval(async function() {
-    let data;
+    const buffer = new ArrayBuffer(16);
+    const data = new Uint16Array(buffer);
     // 
     let rc = await bh1745ncu.get_val(data);
     // 
