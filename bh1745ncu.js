@@ -64,10 +64,10 @@ class BH1745NUC{
       //return (rc);
     //}
 
-    Wire.requestFrom(this.slaveAddress, size, true);
+    this.Wire.requestFrom(this.slaveAddress, size, true);
     let cnt = 0;
-    while(Wire.available()) {
-      data[cnt] = Wire.read();
+    while(this.Wire.available()) {
+      data[cnt] = this.Wire.read();
       cnt++;
     }
 
