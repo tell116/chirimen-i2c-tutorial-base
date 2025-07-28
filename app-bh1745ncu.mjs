@@ -18,4 +18,4 @@ const interval = setInterval(async function() {
     
     console.dir({"RED":data[0], "GREEN":data[1], "BLUE":data[2], "CLEAR":data[3]});
 
-}, 1000);
+}, 20000);
