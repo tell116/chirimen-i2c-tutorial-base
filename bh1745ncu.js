@@ -50,9 +50,8 @@ class BH1745NUC{
   }
 
   async get_val(){
-    let data;
-
     let val = await this.get_rawval();
+    let data = Array(8);
 
     data[0] =  (val[1] << 8) | val[0];
     data[1] =  (val[3] << 8) | val[2];
