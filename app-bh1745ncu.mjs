@@ -14,11 +14,9 @@ await bh1745ncu.init();
 
 let count = 0;
 const interval = setInterval(async function() {
-    const buffer = new ArrayBuffer(8);
-    const data = new Uint16Array(buffer);
-    // 
-    let rc = await bh1745ncu.get_val(data);
-    // 
+    
+    let data = await bh1745ncu.get_val();
+    
     console.dir({"RED":data[0], "GREEN":data[1], "BLUE":data[2], "CLEAR":data[3]});
 
     count++;
