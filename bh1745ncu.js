@@ -37,45 +37,21 @@ class BH1745NUC{
 
   async init() {
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    ///
-    let rc;
 
-    rc = this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
-    if (rc != 0) {
-      console.log("Can't write BH1745NUC MODE_CONTROL1 register");
-      return (rc);
-    }
-
-    rc = this.write(BH1745NUC_MODE_CONTROL2, [BH1745NUC_MODE_CONTROL2_VAL]);
-    if (rc != 0) {
-      console.log("Can't write BH1745NUC MODE_CONTROL2 register");
-      return (rc);
-    }
-
-    rc = this.write(BH1745NUC_MODE_CONTROL3, [BH1745NUC_MODE_CONTROL3_VAL]);
-    if (rc != 0) {
-      console.log("Can't write BH1745NUC MODE_CONTROL3 register");
-      return (rc);
-    }
+    this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
+    this.write(BH1745NUC_MODE_CONTROL2, [BH1745NUC_MODE_CONTROL2_VAL]);
+    this.write(BH1745NUC_MODE_CONTROL3, [BH1745NUC_MODE_CONTROL3_VAL]);
   }
 
-  async get_rawval(data){
-    const rc = await this.read(BH1745NUC_RED_DATA_LSB, data, 8);
-    if (rc != 0) {
-      console.log("Can't get BH1745NUC RGBC value");
-    }
+  async get_rawval(){///
+    const data = await this.read(BH1745NUC_RED_DATA_LSB, 8);
     console.dir({"r0":data[0], "r1":data[1], "r2":data[2], "r3":data[3],"r4":data[4], "r5":data[5], "r6":data[6], "r7":data[7]});///
-    return (rc);
+    return (data);
   }
 
   async get_val(data){
-    const buffer = new ArrayBuffer(8);
-    const val = new Uint8Array(buffer);
 
-    let rc = await this.get_rawval(val);
-    //if (rc != 0) {///エラー時
-      //return (rc);
-    //}
+    let val = await this.get_rawval();
 
     data[0] =  (val[1] << 8) | val[0];
     data[1] =  (val[3] << 8) | val[2];
