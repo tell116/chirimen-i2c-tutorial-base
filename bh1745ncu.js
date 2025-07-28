@@ -34,9 +34,9 @@ class BH1745NUC{
   async init() {
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
 
-    this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
-    this.write(BH1745NUC_MODE_CONTROL2, [BH1745NUC_MODE_CONTROL2_VAL]);
-    this.write(BH1745NUC_MODE_CONTROL3, [BH1745NUC_MODE_CONTROL3_VAL]);
+    await this.write(BH1745NUC_MODE_CONTROL1, [BH1745NUC_MODE_CONTROL1_VAL]);
+    await this.write(BH1745NUC_MODE_CONTROL2, [BH1745NUC_MODE_CONTROL2_VAL]);
+    await this.write(BH1745NUC_MODE_CONTROL3, [BH1745NUC_MODE_CONTROL3_VAL]);
   }
 
   async get_rawval(){
