@@ -49,7 +49,8 @@ class BH1745NUC{
     return (data);
   }
 
-  async get_val(data){
+  async get_val(){
+    let data;
 
     let val = await this.get_rawval();
 
@@ -58,7 +59,7 @@ class BH1745NUC{
     data[2] =  (val[5] << 8) | val[4];
     data[3] =  (val[7] << 8) | val[6];
     console.dir({"d0":data[0], "d1":data[1], "d2":data[2], "d3":data[3]});///
-    return (rc);
+    return (data);
   }
 
   async write(memory_address, data){
