@@ -9,6 +9,6 @@
   "author": "KDDI Technology",
   "license": "MIT",
   "dependencies": {
-    "chirimen": "^0.2.1"
+    "chirimen": "^0.3.0"
   }
 }
